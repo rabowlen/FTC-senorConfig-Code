@@ -78,23 +78,29 @@ public class DriverMode extends LinearOpMode {
             double tgtPower = 0;
             while (opModeIsActive()) {
                 // check to see if we need to move the servo.
-            while(gamepad1.x) {
-                // move to 0 degrees.
-                rightClaw.setPosition(1);
-                leftClaw.setPosition(0);
+            if(gamepad1.x) {
+                // move to open position
+                rightClaw.setPosition(.15);
+                leftClaw.setPosition(.75);
+                
+                
              } 
-            while(gamepad1.b) {
-                // move to 180 degrees.
-                rightClaw.setPosition(.2);
-                leftClaw.setPosition(.785);
+             
+            if(gamepad1.b) {
+                // move to closed position
+                rightClaw.setPosition(.75);
+                leftClaw.setPosition(.15);
             }   
             
             /*Allow the arm to raise with Y and lower with A*/
-            
             while(gamepad1.y){
-                
-                
-                
+                rightArm.setPosition(1);
+                leftArm.setPosition(0);
+            } 
+            
+            if(gamepad1.a){
+                rightArm.setPosition(0);
+                leftArm.setPosition(1);
             }
            
         
@@ -110,22 +116,22 @@ public class DriverMode extends LinearOpMode {
 
         // holonomic formulas
 
-        float FrontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-        float FrontRight = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-        float BackRight = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
-        float BackLeft = -gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
+        double FrontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+        double FrontRight = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+        double BackRight = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
+        double BackLeft = -gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
 
         // clip the right/left values so that the values never exceed +/- 1
-        FrontRight = Range.clip(FrontRight, -1, 1);
-        FrontLeft = Range.clip(FrontLeft, -1, 1);
-        BackLeft = Range.clip(BackLeft, -1, 1);
-        BackRight = Range.clip(BackRight, -1, 1);
+        FrontRight = (double)Range.clip(FrontRight, -.80, .80);
+        FrontLeft = (double)Range.clip(FrontLeft, -.80, .80);
+        BackLeft = (double)Range.clip(BackLeft, -.80, .80);
+        BackRight = (double)Range.clip(BackRight, -.80, .80);
 
         // write the values to the motors
-        frontRight.setPower(FrontRight);
-        frontLeft.setPower(FrontLeft);
-        backLeft.setPower(BackLeft);
-        backRight.setPower(BackRight);
+        frontRight.setPower(scaleInput(FrontRight));
+        frontLeft.setPower(scaleInput(FrontLeft));
+        backLeft.setPower(scaleInput(BackLeft));
+        backRight.setPower(scaleInput(BackRight));
 
             }
         }
@@ -138,7 +144,7 @@ public class DriverMode extends LinearOpMode {
      */
     double scaleInput(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 0.85, 0.85 };
 
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
