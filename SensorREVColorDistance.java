@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -147,118 +147,6 @@ public class SensorREVColorDistance extends LinearOpMode {
                 relativeLayout.setBackgroundColor(Color.WHITE);
             }
         });
-
-        private DcMotor frontRight;
-        private DcMotor backRight;
-        private DcMotor backLeft;
-        private DcMotor frontLeft;
-        private Servo rightClaw;
-        private Servo leftClaw;
-        private Servo rightArm;
-        private Servo leftArm;
-
-
-
-        //Methods to lift and lower the claw arm.
-        public void liftArm(){
-            rightArm.setPosition(1);
-            leftArm.setPosition(0);
-        }
-
-        public void lowerArm(){
-            rightArm.setPosition(0);
-            leftArm.setPosition(1);
-        }
-
-        //Methods to automatically open or close the claw.
-        public void grab(){
-            rightClaw.setPosition(.75);
-            leftClaw.setPosition(.15);
-        }
-
-        public void release(){
-            rightClaw.setPosition(.15);
-            leftClaw.setPosition(.75);
-        }
-
-        //A method to stop the wheels.
-        public void brake(){
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
-        }
-
-        //Methods to move the bot true forward or backward.
-        public void driveForward(){
-            frontLeft.setPower(-0.5);
-            frontRight.setPower(0.5);
-            backLeft.setPower(-0.5);
-            backRight.setPower(0.5);
-        }
-
-        public void driveBackward(){
-            frontLeft.setPower(0.5);
-            frontRight.setPower(-0.5);
-            backLeft.setPower(0.5);
-            backRight.setPower(-0.5);
-        }
-
-        //Methods to rotate the bot on 0 radius.
-        public void rotateRight(){
-            frontLeft.setPower(-0.5);
-            frontRight.setPower(-0.5);
-            backLeft.setPower(-0.5);
-            backRight.setPower(-0.5);
-        }
-
-        public void rotateLeft(){
-            frontLeft.setPower(0.5);
-            frontRight.setPower(0.5);
-            backLeft.setPower(0.5);
-            backRight.setPower(0.5);
-        }
-
-
-
-        //Declare a variable for time.
-        ElapsedTime eTime = new ElapsedTime();
-
-        @Override
-        public void runOpMode() {
-            frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-            backRight = hardwareMap.get(DcMotor.class, "backRight");
-            backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-            frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-            rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-            leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-            rightArm = hardwareMap.get(Servo.class, "rightArm");
-            leftArm = hardwareMap.get(Servo.class, "leftArm");
-
-            telemetry.addData("Status", "Initialized");
-            telemetry.update();
-            // Wait for the game to start (driver presses PLAY)
-            waitForStart();
-
-            // run until the end of the match (driver presses STOP)
-            telemetry.addData("Status", "Running");
-            telemetry.update();
-
-            //Grab onto the preset block
-            grab();
-            liftArm();
-
-            eTime.reset();
-            while(eTime.time() < .6)
-                driveForward();
-            while(eTime.time() < 1.2)
-                rotateLeft();
-            while(eTime.time() < 2.2)
-                driveForward();
-            lowerArm();
-
-
-
 
 
         }
