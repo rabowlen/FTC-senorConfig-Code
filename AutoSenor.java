@@ -24,31 +24,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a PushBot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Remove a @Disabled the on the next line or two (if present) to add this opmode to the Driver Station OpMode list,
- * or add a @Disabled annotation to prevent this OpMode from being added to the Driver Station
- */
-@Autonomous
-
-public class AutoSenor extends LinearOpMode {
-    private DcMotor frontRight;
-    private DcMotor backRight;
-    private DcMotor backLeft;
-    private DcMotor frontLeft;
-    private Servo rightClaw;
-    private Servo leftClaw;
-    private Servo rightArm;
-    private Servo leftArm;
 
 
+public class AutoSenor {
+    public DcMotor frontRight;
+    public DcMotor backRight;
+    public DcMotor backLeft;
+    public DcMotor frontLeft;
+    public Servo rightClaw;
+    public Servo leftClaw;
+    public Servo rightArm;
+    public Servo leftArm;
+    
+    
 
     //Methods to lift and lower the claw arm.
     public void liftArm(){
@@ -109,55 +97,5 @@ public class AutoSenor extends LinearOpMode {
         backLeft.setPower(0.5);
         backRight.setPower(0.5);
     }
-
-
-
-    //Declare a variable for time.
-    ElapsedTime eTime = new ElapsedTime();
-
-    @Override
-    public void runOpMode() {
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-        rightArm = hardwareMap.get(Servo.class, "rightArm");
-        leftArm = hardwareMap.get(Servo.class, "leftArm");
-
-        SensorREVColorDistance color_sensor = new SensorREVColorDisance();
-
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-
-        // run until the end of the match (driver presses STOP)
-        telemetry.addData("Status", "Running");
-        telemetry.update();
-
-        //Trigger the start of the color sensor.
-        color_sensor.runOpMode();
-
-        //Grab onto the preset block
-        grab();
-        liftArm();
-
-        eTime.reset();
-        while(eTime.time() < .6)
-            driveForward();
-        while(eTime.time() < 1.2)
-            rotateLeft();
-        while(eTime.time() < 2.2)
-            driveForward();
-        lowerArm();
-
-
-
-
-
-    }
-
 
 }
