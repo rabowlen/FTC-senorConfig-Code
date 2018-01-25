@@ -106,6 +106,10 @@ public class SensorREVColorDistance extends LinearOpMode {
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
+
+        //Create an instance of AutoSenor
+        AutoSenor autoSenor = new AutoSenor();
+
         // wait for the start button to be pressed.
         waitForStart();
 
@@ -139,6 +143,17 @@ public class SensorREVColorDistance extends LinearOpMode {
             });
 
             telemetry.update();
+
+        autoSenor.frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        autoSenor.backRight = hardwareMap.get(DcMotor.class, "backRight");
+        autoSenor.backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        autoSenor.frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        autoSenor.rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        autoSenor.leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        autoSenor.rightArm = hardwareMap.get(Servo.class, "rightArm");
+        autoSenor.leftArm = hardwareMap.get(Servo.class, "leftArm");
+
+
         }
 
         // Set the panel back to the default color
@@ -150,5 +165,6 @@ public class SensorREVColorDistance extends LinearOpMode {
 
 
         }
+
+
     }
-}
