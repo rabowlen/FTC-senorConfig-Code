@@ -19,6 +19,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import java.io.Console;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.Range;
@@ -29,6 +30,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -78,16 +80,16 @@ public class Driver extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
             telemetry.update();
-            /*Control the claw servos by pushing the x button to open them and the 
+            /*Control the claw servos by pushing the x button to open them and the
             b button to close them.*/
-            
-            
+
+
             //Keep jewel arm in upright position
             jewelArmVertical.setPosition(.10);
             jewelArmHorizontal.setPosition(.65);
-            
-            
-            
+
+
+
             double tgtPower = 0;
             while (opModeIsActive()) {
                 // check to see if we need to move the servo.
@@ -95,34 +97,38 @@ public class Driver extends LinearOpMode {
                 // move to open position
                 rightClaw.setPosition(.15);
                 leftClaw.setPosition(.75);
-                
-                
-             } 
-             
+
+
+             }
+
             if(gamepad1.b) {
                 // move to closed position
                 rightClaw.setPosition(.75);
                 leftClaw.setPosition(.15);
-            }   
-            
-            /*Allow the arm to raise with Y and lower with A*/
-            while(KeyEvent.ACTION_DOWN){
-                armMotor.setPower(.250);
-                
-                
-            } 
-            
-            while(gamepad1.a){
-                armMotor.setPower(-.250);
-                
             }
-            
-            
-           
-        
+
+
+            /*Allow the arm to raise with Y and lower with A*/
+            while(gamepad1.y){
+                armMotor.setPower(-.250);
+                if(gamepad1.y == false){
+                    armMotor.setPower(0);
+                }
+            }
+
+            while(gamepad1.a){
+                armMotor.setPower(.250);
+                if(gamepad1.a == false){
+                    armMotor.setPower(0);
+                }
+            }
+
+
+
+
         /* Creating a holonomic drive by using the two joysticks.*/
-        
-        
+
+
         // left stick controls direction
         // right stick X controls rotation
 
@@ -188,6 +194,3 @@ public class Driver extends LinearOpMode {
     }
 
 }
-
-
-    
