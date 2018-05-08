@@ -35,6 +35,8 @@ public class AutoSenor {
     public Servo leftClaw;
     public Servo rightArm;
     public Servo leftArm;
+    public Servo jewelArmHorizontal;
+    public Servo jewelArmVertical;
     
     
 
@@ -82,6 +84,20 @@ public class AutoSenor {
         backLeft.setPower(0.5);
         backRight.setPower(-0.5);
     }
+    
+    public void strafeLeft(){
+        frontLeft.setPower(0.5);
+        frontRight.setPower(0.5);
+        backLeft.setPower(-0.5);
+        backRight.setPower(-0.5);
+    }
+    
+    public void strafeRight(){
+        frontLeft.setPower(-0.5);
+        frontRight.setPower(-0.5);
+        backLeft.setPower(0.5);
+        backRight.setPower(0.5);
+    }
 
     //Methods to rotate the bot on 0 radius.
     public void rotateRight(){
@@ -97,5 +113,33 @@ public class AutoSenor {
         backLeft.setPower(0.5);
         backRight.setPower(0.5);
     }
+    
+    public void raiseJewelArm() {
+        jewelArmVertical.setPosition(1);
+    }
 
+    public void lowerJewelArm() {
+        jewelArmVertical.setPosition(.75);
+    }
+    
+    public void jewelArmRight() {
+        jewelArmHorizontal.setPosition(.65);
+    }
+    
+    public void jewelArmCenter() {
+        jewelArmHorizontal.setPosition(.40);
+    }
+    
+    public void jewelArmLeft() {
+        jewelArmHorizontal.setPosition(.25);
+    }
+    
+    public void jewelArmUp() {
+        jewelArmVertical.setPosition(.05);
+    }
+    
+    public void jewelArmDown() {
+        jewelArmVertical.setPosition(.620);
+    }
+    
 }

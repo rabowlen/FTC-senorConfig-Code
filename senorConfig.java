@@ -71,10 +71,10 @@ public class DriverMode extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
             telemetry.update();
-            
-            /*Control the claw servos by pushing the x button to open them and the 
+
+            /*Control the claw servos by pushing the x button to open them and the
             b button to close them.*/
-            
+
             double tgtPower = 0;
             while (opModeIsActive()) {
                 // check to see if we need to move the servo.
@@ -82,31 +82,31 @@ public class DriverMode extends LinearOpMode {
                 // move to open position
                 rightClaw.setPosition(.15);
                 leftClaw.setPosition(.75);
-                
-                
-             } 
-             
+
+
+             }
+
             if(gamepad1.b) {
                 // move to closed position
                 rightClaw.setPosition(.75);
                 leftClaw.setPosition(.15);
-            }   
-            
+            }
+
             /*Allow the arm to raise with Y and lower with A*/
             while(gamepad1.y){
                 rightArm.setPosition(1);
                 leftArm.setPosition(0);
-            } 
-            
+            }
+
             if(gamepad1.a){
                 rightArm.setPosition(0);
                 leftArm.setPosition(1);
             }
-           
-        
+
+
         /* Creating a holonomic drive by using the two joysticks.*/
-        
-        
+
+
         // left stick controls direction
         // right stick X controls rotation
 

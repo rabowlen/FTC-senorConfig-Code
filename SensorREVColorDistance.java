@@ -108,7 +108,10 @@ public class SensorREVColorDistance extends LinearOpMode {
 
 
         //Create an instance of AutoSenor
-        AutoSenor autoSenor = new AutoSenor();
+        SenoraConfiga senora = new SenoraConfiga();
+
+        //Create elapsed time Object
+        ElapsedTime timer = new ElapsedTime();
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -144,17 +147,57 @@ public class SensorREVColorDistance extends LinearOpMode {
 
             telemetry.update();
 
-        autoSenor.frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        autoSenor.backRight = hardwareMap.get(DcMotor.class, "backRight");
-        autoSenor.backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        autoSenor.frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        autoSenor.rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        autoSenor.leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-        autoSenor.rightArm = hardwareMap.get(Servo.class, "rightArm");
-        autoSenor.leftArm = hardwareMap.get(Servo.class, "leftArm");
+        senora.frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        senora.backRight = hardwareMap.get(DcMotor.class, "backRight");
+        senora.backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        senora.frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        senora.rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        senora.leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        senora.armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+        senora.jewelArmHorizontal = hardwareMap.get(Servo.class, "jewelArmHorizontal");
+        senora.jewelArmVertical = hardwareMap.get(Servo.class, "jewelArmVertical");
 
 
+        while(timer.time() < 1){
+            senora.jewelArmDown();
         }
+
+        while((timer.time() > 2) && (timer.time() < 3)) {
+            if((hsvValues[0] < 300) && (hsvValues[0] > 200)){
+                senora.jewelArmLeft();
+            }else{
+                senora.jewelArmRight();
+            }
+        }
+
+        while((timer.time() > 4) && (timer.time() < 5)) {
+            senora.grab();
+            senora.jewelArmUp();
+            senora.jewelArmCenter();
+        }
+
+        while((timer.time() > 6) && (timer.time() < 7.10)) {
+            senora.strafeRight();
+        }
+        senora.brake();
+
+        while((timer.time() > 8) && (timer.time() < 9)) {
+            senora.brake();
+        }
+
+        while((timer.time() > 9) && (timer.time() < 10.15)) {
+            senora.rotateRight();
+        }
+
+        while((timer.time() > 10) && (timer.time() < 11)) {
+            senora.driveForward();
+            senora.release();
+        }
+
+        while((timer.time() > 11) && (timer.time() < 11.5)) {
+            senora.driveBackward();
+        }
+        senora.brake();
 
         // Set the panel back to the default color
         relativeLayout.post(new Runnable() {
@@ -164,7 +207,10 @@ public class SensorREVColorDistance extends LinearOpMode {
         });
 
 
+
+
         }
 
 
     }
+}
